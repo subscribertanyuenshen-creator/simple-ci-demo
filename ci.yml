@@ -1,0 +1,23 @@
+name: C++CI pipeline
+on: [push]
+jobs:
+ build:
+   runs-on: ubuntu-lastest
+   steps:
+   - uses: action/checkout@v3
+
+   - name: Install builds tools
+     run: | 
+            sudo apt update
+             sudo apt install -y cmake g++
+           
+   - name: configure project
+     run: cmake-S . -B build
+
+   - name: build project
+     run: cmake --build build 
+
+   - name: runtests
+     run: |
+      cd build
+      ctest --output--on--failure
